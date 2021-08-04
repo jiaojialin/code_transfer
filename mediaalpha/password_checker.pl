@@ -2,7 +2,6 @@
 # Filename : password_checker.pl
 
 use strict;
-use Socket;
 
 # Write a Perl function that takes in a password and checks whether it's valid.  The password should follow the following rule:
 # Passwords must be at least 8 characters long.
@@ -19,21 +18,18 @@ sub pwdChk {
     }
     elsif ( $len < 20 ) {
         unless ( $pwd =~ /(?=.*[a-z])(?=.*[A-Z])/ ) {
-
             # requires mixed case letters
             return 0;
         }
 
         if ( $len < 16 ) {
             unless ( $pwd =~ /(?=.*\d)/ ) {
-
                 # and requires numbers
                 return 0;
             }
 
             if ( $len < 12 ) {
                 unless ( $pwd =~ /(?=.*[^a-zA-Z0-9])/ ) {
-
                     # and requires symbols
                     return 0;
                 }
@@ -45,35 +41,36 @@ sub pwdChk {
 
 
 
-# below is just for test
-$pwd = "jd#Kd&1";
-print "Input: $pwd\n";
-print "output: ", pwdChk($pwd), " (length = ", length($pwd), ")\n";
+# below is just for test, uncommented them to read the tests
 
-$pwd = "jdfKd&1a";
-print "Input: $pwd\n";
-print "output: ", pwdChk($pwd), " (length = ", length($pwd), ")\n";
+# $pwd = "jd#Kd&1";
+# print "Input: $pwd\n";
+# print "output: ", pwdChk($pwd), " (length = ", length($pwd), ")\n";
 
-$pwd = "jdfKd&ca";
-print "Input: $pwd\n";
-print "output: ", pwdChk($pwd), " (length = ", length($pwd), ")\n";
+# $pwd = "jdfKd&1a";
+# print "Input: $pwd\n";
+# print "output: ", pwdChk($pwd), " (length = ", length($pwd), ")\n";
 
-$pwd = "jdfKd81a";
-print "Input: $pwd\n";
-print "output: ", pwdChk($pwd), " (length = ", length($pwd), ")\n";
+# $pwd = "jdfKd&ca";
+# print "Input: $pwd\n";
+# print "output: ", pwdChk($pwd), " (length = ", length($pwd), ")\n";
 
-$pwd = "jdfkd&1a";
-print "Input: $pwd\n";
-print "output: ", pwdChk($pwd), " (length = ", length($pwd), ")\n";
+# $pwd = "jdfKd81a";
+# print "Input: $pwd\n";
+# print "output: ", pwdChk($pwd), " (length = ", length($pwd), ")\n";
 
-$pwd = "jdfKd31abcde";
-print "Input: $pwd\n";
-print "output: ", pwdChk($pwd), " (length = ", length($pwd), ")\n";
+# $pwd = "jdfkd&1a";
+# print "Input: $pwd\n";
+# print "output: ", pwdChk($pwd), " (length = ", length($pwd), ")\n";
 
-$pwd = "jdfKdabcdebcdefgh";
-print "Input: $pwd\n";
-print "output: ", pwdChk($pwd), " (length = ", length($pwd), ")\n";
+# $pwd = "jdfKd31abcde";
+# print "Input: $pwd\n";
+# print "output: ", pwdChk($pwd), " (length = ", length($pwd), ")\n";
 
-$pwd = "aaaaaaasdfdsfsdfsdfsdafsdafsdfsdafsaffdsfdsfdsfsad";
-print "Input: $pwd\n";
-print "output: ", pwdChk($pwd), " (length = ", length($pwd), ")\n";
+# $pwd = "jdfKdabcdebcdefgh";
+# print "Input: $pwd\n";
+# print "output: ", pwdChk($pwd), " (length = ", length($pwd), ")\n";
+
+# $pwd = "aaaaaaasdfdsfsdfsdfsdafsdafsdfsdafsaffdsfdsfdsfsad";
+# print "Input: $pwd\n";
+# print "output: ", pwdChk($pwd), " (length = ", length($pwd), ")\n";
