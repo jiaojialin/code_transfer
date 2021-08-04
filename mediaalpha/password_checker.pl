@@ -25,13 +25,11 @@ sub is_valid {
             # requires mixed case letters
             return 0;
         }
-
         if ( $len < 16 ) {
             unless ( $pwd =~ /(?=.*\d)/ ) {
                 # and requires numbers
                 return 0;
             }
-
             if ( $len < 12 ) {
                 unless ( $pwd =~ /(?=.*[^a-zA-Z0-9])/ ) {
                     # and requires symbols
@@ -42,7 +40,6 @@ sub is_valid {
     }
     return 1;
 }
-
 
 
 # below is just for test, uncommented them to read the tests
