@@ -127,12 +127,31 @@ def shunt(tokens):
 
 def restore(postfix_list):
     """
+
     Restore a infix version of the arithmetic expression without the unnecessary parenthese.
     Args:
       postfix_list: the list of operands/operators in the reverse Polish order
     Returns:
       a string representation of the arithmetic expression without the unnecessary parenthese.
+
+    
+    The basic idea of the algorithm is:
+        We eval the postfix expression step by step (pivoting on operators one by one). 
+        In each step, we always have a operator and two "operands", the operands could be either
+        "basic" operands or expressions that includes operators/parenthese, and we will bind the operator
+        and the two operands back to a infix order, and form a new operand and we could call the operator 
+        "pivotal operator" for this new operand.
+
+        When we work on an operator with their operands, we check the precedence of the current
+        operator and the pivotal operators for both operands, and if the current operator has higher 
+        precedence over the pivotal operator of either operands, we need to surrund the operand with
+        a pair of parentheses.
+
+        There is also specially handling when the current operator is / (division).
+
     """
+    # reconstruct the postfix_list so that we could keep track of the current pivotal operator
+    # of the operand/expression. For basic operands, the pivotal operator is given a dummy value ""
     postfix_obj_list = [(v, "") for v in postfix_list]
     idx = 0
     while idx < len(postfix_obj_list):
