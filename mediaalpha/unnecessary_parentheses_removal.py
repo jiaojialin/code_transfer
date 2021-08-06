@@ -177,7 +177,7 @@ def restore(postfix_list):
                     ].precedence or (
                         operator_info[postfix_obj_list[idx][0]].precedence
                         == operator_info[postfix_obj_list[idx - 1][1]].precedence
-                        and postfix_obj_list[idx][0] == "/"
+                        and ( postfix_obj_list[idx][0] == "/" or postfix_obj_list[idx][0] == "-" )
                     ):
                         new_expr += "(" + postfix_obj_list[idx - 1][0] + ")"
                     else:
