@@ -134,7 +134,7 @@ def restore(postfix_list):
     Returns:
       a string representation of the arithmetic expression without the unnecessary parenthese.
 
-    
+
     The basic idea of the algorithm is:
         We eval the postfix expression step by step (pivoting on operators one by one). 
         In each step, we always have a operator and two "operands", the operands could be either
@@ -147,7 +147,10 @@ def restore(postfix_list):
         precedence over the pivotal operator of either operands, we need to surrund the operand with
         a pair of parentheses.
 
-        There is also specially handling when the current operator is / (division).
+        We also surround the right expression with parenthese when the current operator is - (substraction)
+        or / (division) and the pivotal operator of the right expression has same precedence; this is because 
+        substraction and division are both left associative only, and the evaluation result will be different
+        with and without parentheses for the right expression.
 
     """
     # reconstruct the postfix_list so that we could keep track of the current pivotal operator
@@ -177,7 +180,7 @@ def restore(postfix_list):
                     ].precedence or (
                         operator_info[postfix_obj_list[idx][0]].precedence
                         == operator_info[postfix_obj_list[idx - 1][1]].precedence
-                        and ( postfix_obj_list[idx][0] == "/" or postfix_obj_list[idx][0] == "-" )
+                        and (postfix_obj_list[idx][0] == "/" or postfix_obj_list[idx][0] == "-")
                     ):
                         new_expr += "(" + postfix_obj_list[idx - 1][0] + ")"
                     else:
@@ -189,7 +192,7 @@ def restore(postfix_list):
                 postfix_obj_list = (
                     postfix_obj_list[: idx - 2]
                     + [(new_expr, postfix_obj_list[idx][0])]
-                    + postfix_obj_list[idx + 1 :]
+                    + postfix_obj_list[idx + 1:]
                 )
                 idx = idx - 2
         else:
@@ -207,10 +210,13 @@ def run_test():
     assert remove_unnecessary_parentheses("1*(2+(3*(4+5)))") == "1*(2+3*(4+5))"
     assert remove_unnecessary_parentheses("2 + (3 / -5)") == "2+3/-5"
     assert remove_unnecessary_parentheses("(2 + ((3 / (-5))))") == "2+3/-5"
-    assert remove_unnecessary_parentheses("x123+(y+z)+(t+(v+w))") == "x123+y+z+t+v+w"
+    assert remove_unnecessary_parentheses(
+        "x123+(y+z)+(t+(v+w))") == "x123+y+z+t+v+w"
     assert remove_unnecessary_parentheses("2 + (3^3)") == "2+3^3"
-    assert remove_unnecessary_parentheses("-2 + (3 - 2) - 2* 3") == "-2+3-2-2*3"
-    assert remove_unnecessary_parentheses("-2 + (3 * 2) - 2* 3") == "-2+3*2-2*3"
+    assert remove_unnecessary_parentheses(
+        "-2 + (3 - 2) - 2* 3") == "-2+3-2-2*3"
+    assert remove_unnecessary_parentheses(
+        "-2 + (3 * 2) - 2* 3") == "-2+3*2-2*3"
     assert remove_unnecessary_parentheses("7+12/(4*2)") == "7+12/(4*2)"
     assert remove_unnecessary_parentheses("-14-12/(4/2)") == "-14-12/(4/2)"
     assert (
